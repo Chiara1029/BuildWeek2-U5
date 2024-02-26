@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Service
-public class ClientiServices {
+public class ClientService {
 
     @Autowired
     ClientDAO clientDAO;
