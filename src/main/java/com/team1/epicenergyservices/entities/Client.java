@@ -1,6 +1,7 @@
 package com.team1.epicenergyservices.entities;
 
 
+import com.team1.epicenergyservices.enums.ClientType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @ToString
+@Table(name = "clients")
 public class Client {
 
 
@@ -22,19 +24,19 @@ public class Client {
     private UUID id;
     @Column(name = "company_name")
     private String companyName;
-    @Column
+
     private String pIva;
-    @Column
+
     private String email;
     @Column(name = "register_date")
     private LocalDate registerDate;
     @Column(name = "last_contact_date")
     private LocalDate lastContactDate;
-    @Column
+
     private double revenue;
-    @Column
+
     private String pec;
-    @Column
+
     private String telephone;
     @Column(name = "contact_email")
     private String emailContact;
@@ -44,12 +46,12 @@ public class Client {
     private String surnameContact;
     @Column(name = "contact_number")
     private String numberContact;
-    @Column
+
     private String logo;
 
-    //@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "company_type")
-    private String companyType;
+    private ClientType companyType;
 
     @OneToOne
     @JoinColumn(name = "address_id_legal")
@@ -64,7 +66,7 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Invoice> invoiceList;
 
-    public Client(String companyName, String pIva, String email, LocalDate registerDate, LocalDate lastContactDate, double revenue, String pec, String telephone, String emailContact, String nameContact, String surnameContact, String numberContact, String logo, String companyType, Address legalAddress) {
+    public Client(String companyName, String pIva, String email, LocalDate registerDate, LocalDate lastContactDate, double revenue, String pec, String telephone, String emailContact, String nameContact, String surnameContact, String numberContact, String logo, ClientType companyType, Address legalAddress) {
         this.companyName = companyName;
         this.pIva = pIva;
         this.email = email;
