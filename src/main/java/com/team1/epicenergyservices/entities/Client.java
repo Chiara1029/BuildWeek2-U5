@@ -1,11 +1,7 @@
 package com.team1.epicenergyservices.entities;
 
 
-import com.team1.epicenergyservices.enums.ClientType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,42 +20,51 @@ public class Client {
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private UUID id;
-    @Column(name = "company_name", nullable = false)
+    @Column(name = "company_name")
     private String companyName;
-    @Column(nullable = false)
+    @Column
     private String pIva;
-    @Column(nullable = false)
+    @Column
     private String email;
-    @Column(name = "register_date", nullable = false)
+    @Column(name = "register_date")
     private LocalDate registerDate;
-    @Column(name = "last_contact_date", nullable = false)
+    @Column(name = "last_contact_date")
     private LocalDate lastContactDate;
-    @Column(nullable = false)
+    @Column
     private double revenue;
-    @Column(nullable = false)
+    @Column
     private String pec;
-    @Column(nullable = false)
+    @Column
     private String telephone;
-    @Column(name = "contact_email", nullable = false)
+    @Column(name = "contact_email")
     private String emailContact;
-    @Column(name = "contact_name", nullable = false)
+    @Column(name = "contact_name")
     private String nameContact;
-    @Column(name = "contact_surname", nullable = false)
+    @Column(name = "contact_surname")
     private String surnameContact;
-    @Column(name = "contact_number", nullable = false)
+    @Column(name = "contact_number")
     private String numberContact;
-    @Column(nullable = false)
+    @Column
     private String logo;
-    @Column(name = "company_type", nullable = false)
-    private ClientType companyType;
-    @Column(name = "legal_address", nullable = false)
+
+    //@Enumerated(EnumType.STRING)
+    @Column(name = "company_type")
+    private String companyType;
+
+    @OneToOne
+    @JoinColumn(name = "address_id_legal")
+    // @Column(name = "legal_address"n)
     private Address legalAddress;
-    @Column(name = "operating_address")
+
+    @OneToOne
+    @JoinColumn(name = "address_id_operating")
+    //   @Column(name = "operating_address")
     private Address operatingAddress;
 
+    @OneToMany(mappedBy = "client")
     private List<Invoice> invoiceList;
 
-    public Client(String companyName, String pIva, String email, LocalDate registerDate, LocalDate lastContactDate, double revenue, String pec, String telephone, String emailContact, String nameContact, String surnameContact, String numberContact, String logo, ClientType companyType, Address legalAddress) {
+    public Client(String companyName, String pIva, String email, LocalDate registerDate, LocalDate lastContactDate, double revenue, String pec, String telephone, String emailContact, String nameContact, String surnameContact, String numberContact, String logo, String companyType, Address legalAddress) {
         this.companyName = companyName;
         this.pIva = pIva;
         this.email = email;

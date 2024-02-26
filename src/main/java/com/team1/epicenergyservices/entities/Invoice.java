@@ -1,8 +1,6 @@
 package com.team1.epicenergyservices.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
@@ -13,5 +11,7 @@ public class Invoice {
     @Id
     @GeneratedValue
     private UUID id;
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 }

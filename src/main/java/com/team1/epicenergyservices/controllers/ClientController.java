@@ -7,7 +7,6 @@ import com.team1.epicenergyservices.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +17,7 @@ import java.util.UUID;
 public class ClientController {
 
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
 
     @GetMapping
     public Page<Client> getAllClients(@RequestParam(defaultValue = "0") int page,
@@ -51,7 +50,6 @@ public class ClientController {
 
     @PatchMapping("/{clientId}/upload")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String uploadLogo(@RequestParam("image") MultipartFile file, @PathVariable UUID clientId) throws Exception {
         return clientService.uploadImage(file, clientId);
     }

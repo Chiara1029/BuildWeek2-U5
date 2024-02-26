@@ -1,6 +1,5 @@
 package com.team1.epicenergyservices.payloads;
 
-import com.team1.epicenergyservices.enums.ClientType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +9,7 @@ import java.time.LocalDate;
 public record NewClientDTO(
 
         @NotEmpty
-        ClientType companyType,
+        String companyType,
 
         @NotEmpty
         String companyName,

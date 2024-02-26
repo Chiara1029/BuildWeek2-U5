@@ -16,16 +16,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
 public class ClientService {
 
     @Autowired
-    ClientDAO clientDAO;
+    private ClientDAO clientDAO;
 
     @Autowired
-    Cloudinary cloudinary;
+    private Cloudinary cloudinary;
 
     public Page<Client> findAll(int size, int page, String order) {
         Pageable pageable = PageRequest.of(size, page, Sort.by(order));
@@ -52,6 +53,7 @@ public class ClientService {
         newClient.setSurnameContact(body.surnameContact());
         newClient.setNumberContact(body.numberContact());
         newClient.setLogo(body.logo());
+        newClient.setRegisterDate(LocalDate.now());
 
         return clientDAO.save(newClient);
     }
