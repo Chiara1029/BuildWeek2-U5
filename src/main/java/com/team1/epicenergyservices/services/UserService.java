@@ -1,6 +1,7 @@
 package com.team1.epicenergyservices.services;
 
 import com.team1.epicenergyservices.entities.User;
+import com.team1.epicenergyservices.enums.TypeUser;
 import com.team1.epicenergyservices.exceptions.BadRequestException;
 import com.team1.epicenergyservices.exceptions.NotFoundException;
 import com.team1.epicenergyservices.payloads.UserDTO;
@@ -18,20 +19,6 @@ public class UserService {
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Email " + email + " not found."));
-    }
-
-    public User save(UserDTO user) throws IOException{
-        userRepository.findByEmail(user.email()).ifPresent( us -> {
-            throw new BadRequestException("Email: " + user.email() + " already exist.");
-        });
-        User newUser = new User();
-        newUser.setUsername(user.username());
-        newUser.setEmail(user.email());
-        newUser.setPassword(user.password());
-        newUser.setName(user.name());
-        newUser.setLastName(user.lastName());
-
-        return userRepository.save(newUser);
     }
 
     public User findById(UUID id){
