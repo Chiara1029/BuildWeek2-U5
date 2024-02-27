@@ -4,6 +4,7 @@ import com.team1.epicenergyservices.entities.User;
 import com.team1.epicenergyservices.exceptions.BadRequestException;
 import com.team1.epicenergyservices.payloads.UserDTO;
 import com.team1.epicenergyservices.repositories.UserRepository;
+import com.team1.epicenergyservices.services.AuthService;
 import com.team1.epicenergyservices.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ public class UserController {
     private UserService userSrv;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AuthService authSrv;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -28,7 +31,7 @@ public class UserController {
         if(validation.hasErrors()){
             throw new BadRequestException(validation.getAllErrors());
         }
-        return userSrv.save(user);
+        return authSrv.save(user);
     }
 
     @GetMapping
