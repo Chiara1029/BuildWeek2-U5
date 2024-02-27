@@ -1,7 +1,7 @@
-package com.team1.epicenergyservices.controller;
+package com.team1.epicenergyservices.controllers;
 
 import com.team1.epicenergyservices.entities.Invoice;
-import com.team1.epicenergyservices.payload.InvoiceDTO;
+import com.team1.epicenergyservices.payloads.InvoiceDTO;
 import com.team1.epicenergyservices.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
