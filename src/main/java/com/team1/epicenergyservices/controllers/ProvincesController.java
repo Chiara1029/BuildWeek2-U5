@@ -14,7 +14,7 @@ public class ProvincesController {
     private ProvincesService provincesService;
 
     @GetMapping
-    public List<Province> getAllUsers() {
+    public List<Province> getAllProvinces() {
         return this.provincesService.getProvinces();
     }
 
