@@ -55,12 +55,10 @@ public class Client {
 
     @OneToOne
     @JoinColumn(name = "address_id_legal")
-    // @Column(name = "legal_address"n)
     private Address legalAddress;
 
     @OneToOne
     @JoinColumn(name = "address_id_operating")
-    //   @Column(name = "operating_address")
     private Address operatingAddress;
 
     @OneToMany(mappedBy = "client")
