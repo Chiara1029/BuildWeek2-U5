@@ -19,14 +19,17 @@ public class Invoice {
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
-    @ManyToOne
     private UUID invoiceId;
     private LocalDate date;
-    private Long number;
-    private Long invoiceValue;
+    private long number;
+    private long invoiceValue;
     private String invoiceState;
 
-    public Invoice(LocalDate date, Long number, Long invoiceValue, String invoiceState) {
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    public Invoice(LocalDate date, long number, long invoiceValue, String invoiceState) {
         this.date = date;
         this.number = number;
         this.invoiceValue = invoiceValue;

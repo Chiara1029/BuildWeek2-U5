@@ -1,4 +1,4 @@
-package com.team1.epicenergyservices.controller;
+package com.team1.epicenergyservices.controllers;
 
 import com.team1.epicenergyservices.entities.Invoice;
 import com.team1.epicenergyservices.payload.InvoiceDTO;
@@ -26,16 +26,15 @@ public class InvoiceController {
     @GetMapping
     public Page<Invoice> getAllInvoices(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "10") int size,
-                                        @RequestParam(defaultValue = "id") String orderBy){
+                                        @RequestParam(defaultValue = "id") String orderBy) {
         return this.invoiceService.getInvoice(page, size, orderBy);
     }
 
-    @DeleteMapping("/{number}")
+    @DeleteMapping("/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT) //204
-    public void findIdAndDelete(@PathVariable UUID id){
-        this.invoiceService.findByIdThenDelete(id);
+    public void findIdAndDelete(@PathVariable UUID invoiceId) {
+        this.invoiceService.findByIdThenDelete(invoiceId);
     }
-
 
 
 }
