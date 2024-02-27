@@ -31,4 +31,5 @@ public class Address {
         this.cap = cap;
         this.municipality = municipality;
     }
+
 }
