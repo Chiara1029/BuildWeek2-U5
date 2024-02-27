@@ -25,21 +25,4 @@ public class ConfigCloudinary {
         return new Cloudinary(config);
     }
 
-    @Bean
-        // Bean che mi serve per configurare a piacimento la security filter chain
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        // Disabilitare alcuni comportamenti di default
-        httpSecurity.formLogin(AbstractHttpConfigurer::disable); // Non vogliamo il form di login
-        httpSecurity.csrf(AbstractHttpConfigurer::disable); // Non vogliamo la protezione da CSRF
-        httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Non vogliamo le sessioni
-
-        // Aggiungere filtri custom
-        //httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
-        // Aggiungere/rimuovere determinate regole di protezione per gli endpoint
-        // Qui possiamo determinare se debba essere necessaria un'autenticazione per accedervi
-        httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/**").permitAll());
-
-        return httpSecurity.build();
-    }
 }
