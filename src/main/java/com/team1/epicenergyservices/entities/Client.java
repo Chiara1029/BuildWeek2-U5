@@ -53,18 +53,18 @@ public class Client {
     @Column(name = "company_type")
     private ClientType companyType;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "address_id_legal")
     private Address legalAddress;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "address_id_operating")
     private Address operatingAddress;
 
     @OneToMany(mappedBy = "client")
     private List<Invoice> invoiceList;
 
-    public Client(String companyName, String pIva, String email, LocalDate registerDate, LocalDate lastContactDate, double revenue, String pec, String telephone, String emailContact, String nameContact, String surnameContact, String numberContact, String logo, ClientType companyType, Address legalAddress) {
+    public Client(String companyName, String pIva, String email, LocalDate registerDate, LocalDate lastContactDate, double revenue, String pec, String telephone, String emailContact, String nameContact, String surnameContact, String numberContact, String logo, ClientType companyType, Address legalAddress, Address operatingAddress) {
         this.companyName = companyName;
         this.pIva = pIva;
         this.email = email;
@@ -80,5 +80,6 @@ public class Client {
         this.logo = logo;
         this.companyType = companyType;
         this.legalAddress = legalAddress;
+        this.operatingAddress = operatingAddress;
     }
 }
