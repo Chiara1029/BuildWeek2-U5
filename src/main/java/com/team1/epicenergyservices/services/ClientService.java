@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -98,6 +99,9 @@ public class ClientService {
         return url;
     }
 
-
+    //ordino per nome
+    public List<Client> getClientsOrderedByCompanyName() {
+        return clientDAO.findAllByOrderByCompanyName();
+    }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,16 +23,20 @@ public class ClientController {
     @GetMapping
     public Page<Client> getAllClients(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "10") int size,
-                                      @RequestParam(defaultValue = "clientId") String order) {
+                                      @RequestParam(defaultValue = "id") String order) {
         return clientService.findAll(page, size, order);
     }
 
-    @GetMapping("/{clientId}")
+    @GetMapping("/findById/{clientId}")
     public Client findById(@PathVariable UUID clientId) {
         return clientService.findById(clientId);
     }
 
-
+    //ordino per nome
+    @GetMapping("/orderedByCompanyName")
+    public List<Client> getClientsOrderedByCompanyName() {
+        return clientService.getClientsOrderedByCompanyName();
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
