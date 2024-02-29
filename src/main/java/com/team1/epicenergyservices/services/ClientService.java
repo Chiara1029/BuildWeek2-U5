@@ -57,8 +57,8 @@ public class ClientService {
         newClient.setNumberContact(body.numberContact());
         newClient.setLogo(body.logo());
         newClient.setRegisterDate(LocalDate.now());
-        newClient.setLegalAddress(addressesService.save(body.address()));
-
+        newClient.setLegalAddress(addressesService.save(body.legalAddress()));
+        if (body.operatingAddress() != null) newClient.setOperatingAddress(addressesService.save(body.operatingAddress()));
         return clientDAO.save(newClient);
     }
 

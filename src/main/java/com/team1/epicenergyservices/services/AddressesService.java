@@ -16,8 +16,8 @@ public class AddressesService {
     private MunicipalitiesService municipalitiesService;
 
     public Address save(AddressDTO addressDTO) {
-        Address newAddress = new Address(addressDTO.street(), addressDTO.civicNumber(), addressDTO.location(),
-                addressDTO.cap(), municipalitiesService.findByName(addressDTO.municipality()));
+        Address newAddress = new Address(addressDTO.street(), addressDTO.civicNumber(),
+                addressDTO.location(), addressDTO.cap(), municipalitiesService.findByName(addressDTO.municipality()));
         return addressesDAO.save(newAddress);
     }
 }
