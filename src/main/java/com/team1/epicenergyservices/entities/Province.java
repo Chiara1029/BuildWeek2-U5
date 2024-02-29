@@ -1,5 +1,6 @@
 package com.team1.epicenergyservices.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Province {
     private int id;
     private String provinceCode;
     private String provinceName;
+    @JsonIgnore
     @OneToMany(mappedBy = "province")
     private Set<Municipality> municipalities;
 
