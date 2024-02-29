@@ -2,7 +2,7 @@ package com.team1.epicenergyservices.services;
 
 import com.team1.epicenergyservices.entities.Invoice;
 import com.team1.epicenergyservices.exceptions.NotFoundException;
-import com.team1.epicenergyservices.payload.InvoiceDTO;
+import com.team1.epicenergyservices.payloads.InvoiceDTO;
 import com.team1.epicenergyservices.repositories.InvoiceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

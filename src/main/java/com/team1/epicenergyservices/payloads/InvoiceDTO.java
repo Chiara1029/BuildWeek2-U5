@@ -1,4 +1,4 @@
-package com.team1.epicenergyservices.payload;
+package com.team1.epicenergyservices.payloads;
 
 import java.time.LocalDate;
 
