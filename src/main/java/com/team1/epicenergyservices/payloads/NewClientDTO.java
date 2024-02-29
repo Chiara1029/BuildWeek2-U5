@@ -35,8 +35,9 @@ public record NewClientDTO(
         String surnameContact,
         @NotEmpty
         String numberContact,
-        String logo
-
+        String logo,
+        @NotNull
+        AddressDTO address
 
 ) {
 

@@ -10,4 +10,8 @@ public class NotFoundException extends RuntimeException {
     public NotFoundException(UUID id) {
         super(id + " not found.");
     }
+
+    public NotFoundException(int id) {
+        super(id + " not found.");
+    }
 }

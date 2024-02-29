@@ -2,10 +2,12 @@ package com.team1.epicenergyservices.services;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.team1.epicenergyservices.entities.Address;
 import com.team1.epicenergyservices.entities.Client;
 import com.team1.epicenergyservices.exceptions.NotFoundException;
 import com.team1.epicenergyservices.payloads.ClientUpdateDTO;
 import com.team1.epicenergyservices.payloads.NewClientDTO;
+import com.team1.epicenergyservices.repositories.AddressesDAO;
 import com.team1.epicenergyservices.repositories.ClientDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,12 @@ public class ClientService {
 
     @Autowired
     private ClientDAO clientDAO;
+
+    @Autowired
+    private AddressesDAO addressesDAO;
+
+    @Autowired
+    private MunicipalitiesService municipalitiesService;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -54,6 +62,11 @@ public class ClientService {
         newClient.setNumberContact(body.numberContact());
         newClient.setLogo(body.logo());
         newClient.setRegisterDate(LocalDate.now());
+
+       Address newAddress = new Address(body.address().street(), body.address().civicNumber(), body.address().location(),
+               body.address().cap(), municipalitiesService.findByName(body.address().municipality()));
+
+       newClient.setLegalAddress(addressesDAO.save(newAddress));
 
         return clientDAO.save(newClient);
     }
