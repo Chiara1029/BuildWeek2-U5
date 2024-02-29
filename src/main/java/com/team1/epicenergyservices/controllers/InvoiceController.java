@@ -17,7 +17,7 @@ public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Invoice saveInvoice(@RequestBody InvoiceDTO newInvoice) {
         return this.invoiceService.newInvoice(newInvoice);
@@ -32,7 +32,7 @@ public class InvoiceController {
 
     @DeleteMapping("/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT) //204
-    public void findIdAndDelete(@PathVariable UUID invoiceId) {
+    public void findIdAndDelete(@PathVariable Long invoiceId) {
         this.invoiceService.findByIdThenDelete(invoiceId);
     }
 

@@ -1,9 +1,10 @@
 package com.team1.epicenergyservices.payloads;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record InvoiceDTO(LocalDate date,
-                         Long invoiceValue,
-                         Long number,
-                         String invoiceState) {
+                         double invoiceValue,
+                         String invoiceState,
+                         UUID clientId) {
 }

@@ -1,5 +1,6 @@
 package com.team1.epicenergyservices.services;
 
+import com.team1.epicenergyservices.entities.Client;
 import com.team1.epicenergyservices.entities.Invoice;
 import com.team1.epicenergyservices.exceptions.NotFoundException;
 import com.team1.epicenergyservices.payloads.InvoiceDTO;
@@ -18,6 +19,8 @@ public class InvoiceService {
 
     @Autowired
     private InvoiceDAO invoiceDAO;
+    @Autowired
+    private ClientService clientSrv;
 
     public Page<Invoice> getInvoice(int pageNum, int size, String orderBy) {
         if (size > 100) size = 100;
@@ -26,30 +29,29 @@ public class InvoiceService {
     }
 
     public Invoice newInvoice(InvoiceDTO payload) {
+        Client client = clientSrv.findById(payload.clientId());
         Invoice newInvoice = new Invoice(
                 payload.date(),
-                payload.number(),
                 payload.invoiceValue(),
-                payload.invoiceState()
-
+                payload.invoiceState(),
+                client
         );
         return invoiceDAO.save(newInvoice);
     }
 
-    public Invoice findById(UUID invoiceId) {
+    public Invoice findById(Long invoiceId) {
         return invoiceDAO.findById(invoiceId).orElseThrow(() -> new NotFoundException("Id " + invoiceId + " has no matches."));
     }
 
-    public void findByIdThenDelete(UUID invoiceId) {
+    public void findByIdThenDelete(Long invoiceId) {
         Invoice idFound = this.findById(invoiceId);
         invoiceDAO.delete(idFound);
     }
 
 
-    public Invoice findByIdThenUpdate(UUID invId, Invoice modifiedInvoice) {
+    public Invoice findByIdThenUpdate(Long invId, Invoice modifiedInvoice) {
         Invoice idFound = this.findById(invId);
         idFound.setDate(modifiedInvoice.getDate());
-        idFound.setNumber(modifiedInvoice.getNumber());
         idFound.setInvoiceValue(modifiedInvoice.getInvoiceValue());
         idFound.setInvoiceState(modifiedInvoice.getInvoiceState());
         return invoiceDAO.save(idFound);

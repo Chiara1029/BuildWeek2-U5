@@ -1,5 +1,6 @@
 package com.team1.epicenergyservices.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,22 +18,22 @@ import java.util.UUID;
 public class Invoice {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
-    private UUID invoiceId;
+    private Long invoiceId;
     private LocalDate date;
-    private long number;
-    private long invoiceValue;
+    private double invoiceValue;
     private String invoiceState;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnore
     private Client client;
 
-    public Invoice(LocalDate date, long number, long invoiceValue, String invoiceState) {
+    public Invoice(LocalDate date, double invoiceValue, String invoiceState, Client client) {
         this.date = date;
-        this.number = number;
         this.invoiceValue = invoiceValue;
         this.invoiceState = invoiceState;
+        this.client = client;
     }
 }
