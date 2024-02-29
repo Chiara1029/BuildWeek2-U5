@@ -104,4 +104,12 @@ public class ClientService {
         return clientDAO.findAllByOrderByCompanyName();
     }
 
+    //ordino per fatturato
+    public List<Client> getAllClientsOrderedByRevenueAsc() {
+        return clientDAO.findAllByOrderByRevenueAsc();
+    }
+
+    public List<Client> getAllClientsOrderedByRevenueDesc() {
+        return clientDAO.findAllByOrderByRevenueDesc();
+    }
 }

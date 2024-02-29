@@ -32,11 +32,20 @@ public class ClientController {
         return clientService.findById(clientId);
     }
 
-    //ordino per nome
-    @GetMapping("/orderedByCompanyName")
-    public List<Client> getClientsOrderedByCompanyName() {
-        return clientService.getClientsOrderedByCompanyName();
+
+    //ORDERS BY
+    //ordino per fatturato dec e cre
+    @GetMapping("/orderByRevenue/{order}")
+    public List<Client> getClientsOrderedByRevenue(@PathVariable String order) {
+        if (order.equals("low")) {
+            return clientService.getAllClientsOrderedByRevenueAsc();
+        } else if (order.equals("plus")) {
+            return clientService.getAllClientsOrderedByRevenueDesc();
+        } else {
+            return null;
+        }
     }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

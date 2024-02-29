@@ -12,5 +12,7 @@ public interface ClientDAO extends JpaRepository<Client, UUID> {
 
     List<Client> findAllByOrderByCompanyName();
 
+    List<Client> findAllByOrderByRevenueAsc();
 
+    List<Client> findAllByOrderByRevenueDesc();
 }
