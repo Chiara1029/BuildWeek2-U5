@@ -31,6 +31,8 @@ public class ClientController {
         return clientService.findById(clientId);
     }
 
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Client createNewClient(@RequestBody NewClientDTO payload) {
@@ -53,4 +55,6 @@ public class ClientController {
     public String uploadLogo(@RequestParam("image") MultipartFile file, @PathVariable UUID clientId) throws Exception {
         return clientService.uploadImage(file, clientId);
     }
+
+
 }
