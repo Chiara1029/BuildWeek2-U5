@@ -27,7 +27,6 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    @JsonIgnore
     private Client client;
 
     public Invoice(LocalDate date, double invoiceValue, String invoiceState, Client client) {

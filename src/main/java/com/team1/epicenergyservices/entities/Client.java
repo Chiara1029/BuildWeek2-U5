@@ -1,6 +1,7 @@
 package com.team1.epicenergyservices.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team1.epicenergyservices.enums.ClientType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -62,6 +63,7 @@ public class Client {
     private Address operatingAddress;
 
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Invoice> invoiceList;
 
     public Client(String companyName, String pIva, String email, LocalDate registerDate, LocalDate lastContactDate, double revenue, String pec, String telephone, String emailContact, String nameContact, String surnameContact, String numberContact, String logo, ClientType companyType, Address legalAddress, Address operatingAddress) {
