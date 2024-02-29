@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,17 +40,13 @@ public class InvoiceService {
         );
         return invoiceDAO.save(newInvoice);
     }
-
     public Invoice findById(Long invoiceId) {
         return invoiceDAO.findById(invoiceId).orElseThrow(() -> new NotFoundException("Id " + invoiceId + " has no matches."));
     }
-
     public void findByIdThenDelete(Long invoiceId) {
         Invoice idFound = this.findById(invoiceId);
         invoiceDAO.delete(idFound);
     }
-
-
     public Invoice findByIdThenUpdate(Long invId, Invoice modifiedInvoice) {
         Invoice idFound = this.findById(invId);
         idFound.setDate(modifiedInvoice.getDate());
@@ -56,4 +54,21 @@ public class InvoiceService {
         idFound.setInvoiceState(modifiedInvoice.getInvoiceState());
         return invoiceDAO.save(idFound);
     }
+    public List<Invoice> findByClientId(UUID clientId){
+        List<Invoice> found = null;
+        if (clientSrv.findById(clientId) != null){
+            found = invoiceDAO.findByClientId(clientId);
+        }
+        return found;
+    }
+    public List<Invoice> findByYear(int year){
+        return invoiceDAO.findByYear(year);
+    }
+    public List<Invoice> findByValueRange(double value1, double value2){
+        return invoiceDAO.findByValueRange(value1, value2);
+    }
+    public List<Invoice> findByDate(LocalDate date){
+        return invoiceDAO.findByDate(date);
+    }
+
 }

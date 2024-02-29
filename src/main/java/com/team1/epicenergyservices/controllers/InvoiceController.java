@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,6 +31,29 @@ public class InvoiceController {
                                         @RequestParam(defaultValue = "id") String orderBy) {
         return this.invoiceService.getInvoice(page, size, orderBy);
     }
+
+    @GetMapping("/findByClient/{clientId}")
+    public List<Invoice> findByClientId(@PathVariable UUID clientId){
+        return invoiceService.findByClientId(clientId);
+    }
+
+    @GetMapping("/findByYear/{year}")
+    public List<Invoice> findByYear(@PathVariable int year){
+        return invoiceService.findByYear(year);
+    }
+
+    @GetMapping("/findByValueRange/{value1}/{value2}")
+    public List<Invoice> findByValueRange(@PathVariable double value1,
+                                          @PathVariable double value2){
+        return invoiceService.findByValueRange(value1, value2);
+    }
+
+    @GetMapping("/findByDate")
+    public List<Invoice> findByDate(@RequestParam("date") String date){
+        return invoiceService.findByDate(LocalDate.parse(date));
+    }
+
+
 
     @DeleteMapping("/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT) //204
