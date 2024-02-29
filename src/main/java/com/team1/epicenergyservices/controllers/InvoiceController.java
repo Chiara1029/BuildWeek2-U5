@@ -42,24 +42,25 @@ public class InvoiceController {
         return invoiceService.findByYear(year);
     }
 
-    @GetMapping("/findByValueRange/{value1}/{value2}")
-    public List<Invoice> findByValueRange(@PathVariable double value1,
-                                          @PathVariable double value2){
+    @GetMapping("/findByDate/{date}")
+    public List<Invoice> findByDate(@PathVariable LocalDate date){
+        return invoiceService.findByDate(date);
+    }
+
+    @GetMapping("/findByValueRange")
+    public List<Invoice> findByValueRange(@RequestParam double value1,
+                                          @RequestParam double value2){
         return invoiceService.findByValueRange(value1, value2);
     }
 
-    @GetMapping("/findByDate")
-    public List<Invoice> findByDate(@RequestParam("date") String date){
-        return invoiceService.findByDate(LocalDate.parse(date));
+    @GetMapping("/findByState")
+    public List<Invoice> findByInvoiceState(@RequestParam String invoiceState){
+        return invoiceService.findByInvoiceState(invoiceState);
     }
 
-
-
     @DeleteMapping("/{invoiceId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) //204
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findIdAndDelete(@PathVariable Long invoiceId) {
         this.invoiceService.findByIdThenDelete(invoiceId);
     }
-
-
 }

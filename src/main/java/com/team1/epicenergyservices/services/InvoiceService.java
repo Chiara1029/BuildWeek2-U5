@@ -71,4 +71,7 @@ public class InvoiceService {
         return invoiceDAO.findByDate(date);
     }
 
+    public List<Invoice> findByInvoiceState(String invoiceState){
+        return invoiceDAO.findByInvoiceState(invoiceState);
+    }
 }
