@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,6 +47,26 @@ public class ClientController {
         }
     }
 
+    //FILTER
+    @GetMapping("/revenue/{revenue}")
+    public List<Client> getClientsWithRevenueGreaterThan(@PathVariable double revenue) {
+        return clientService.getByRevenue(revenue);
+    }
+
+    @GetMapping("/ByRegisterDate")
+    public List<Client> getClientsByRegisterDate(@RequestParam LocalDate registerDate) {
+        return clientService.getByRegisterDate(registerDate);
+    }
+
+    @GetMapping("/nameContaining/{name}")
+    public List<Client> getClientsByCompanyNameContaining(@PathVariable String name) {
+        return clientService.getClientsByCompanyNameContaining(name);
+    }
+
+    @GetMapping("/ByLastContactDate")
+    public List<Client> getClientsByLastContactDate(@RequestParam LocalDate lastContactDate) {
+        return clientService.getByLastContactDate(lastContactDate);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

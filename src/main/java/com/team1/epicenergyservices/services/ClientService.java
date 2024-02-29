@@ -99,10 +99,6 @@ public class ClientService {
         return url;
     }
 
-    //ordino per nome
-    public List<Client> getClientsOrderedByCompanyName() {
-        return clientDAO.findAllByOrderByCompanyName();
-    }
 
     //ordino per fatturato
     public List<Client> getAllClientsOrderedByRevenueAsc() {
@@ -111,5 +107,23 @@ public class ClientService {
 
     public List<Client> getAllClientsOrderedByRevenueDesc() {
         return clientDAO.findAllByOrderByRevenueDesc();
+    }
+
+
+    //FILTRO
+    public List<Client> getByRevenue(double revenue) {
+        return clientDAO.findAllByRevenue(revenue);
+    }
+
+    public List<Client> getByRegisterDate(LocalDate registerDate) {
+        return clientDAO.findAllByRegisterDate(registerDate);
+    }
+
+    public List<Client> getByLastContactDate(LocalDate lastContactDate) {
+        return clientDAO.findAllByLastContactDate(lastContactDate);
+    }
+
+    public List<Client> getClientsByCompanyNameContaining(String name) {
+        return clientDAO.findAllByCompanyNameContainingIgnoreCase(name);
     }
 }
