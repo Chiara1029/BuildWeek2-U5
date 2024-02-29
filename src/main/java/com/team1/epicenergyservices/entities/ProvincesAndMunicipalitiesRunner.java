@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 public class ProvincesAndMunicipalitiesRunner implements CommandLineRunner {
@@ -40,9 +41,28 @@ public class ProvincesAndMunicipalitiesRunner implements CommandLineRunner {
 
                 String[] data = line.split(csvSplitBy);
 
-                Province province = new Province(data[0], data[1]);
+                if (!Objects.equals(data[1], "Verbania") && !Objects.equals(data[1], "Medio Campidano") && !Objects.equals(data[1], "Carbonia Iglesias") && !Objects.equals(data[1], "Ogliastra") ) {
 
-                this.provincesService.save(province);
+                    String provinceName = data[1];
+
+                    provinceName = switch (provinceName) {
+                        case "Aosta" -> "Valle d'Aosta/Vallée d'Aoste";
+                        case "Monza-Brianza" -> "Monza e della Brianza";
+                        case "Bolzano" -> "Bolzano/Bozen";
+                        case "Reggio-Emilia" -> "Reggio nell'Emilia";
+                        case "Forli-Cesena" -> "Forlì-Cesena";
+                        case "Pesaro-Urbino" -> "Pesaro e Urbino";
+                        case "Ascoli-Piceno" -> "Ascoli Piceno";
+                        case "Reggio-Calabria" -> "Reggio Calabria";
+                        case "Vibo-Valentia" -> "Vibo Valentia";
+                        case "La-Spezia" -> "La Spezia";
+                        default -> provinceName;
+                    };
+
+                    Province province = new Province(data[0], provinceName);
+
+                    this.provincesService.save(province);
+                }
 
             }
         } catch (IOException e) {
@@ -64,20 +84,6 @@ public class ProvincesAndMunicipalitiesRunner implements CommandLineRunner {
                 if (data.length >= 4) {
 
                     String fourth = data[3];
-
-                    fourth = switch (fourth) {
-                        case "Valle d'Aosta/Vallée d'Aoste" -> "Aosta";
-                        case "Monza e della Brianza" -> "Monza-Brianza";
-                        case "Bolzano/Bozen" -> "Bolzano";
-                        case "Reggio nell'Emilia" -> "Reggio-Emilia";
-                        case "Forlì-Cesena" -> "Forli-Cesena";
-                        case "Pesaro e Urbino" -> "Pesaro-Urbino";
-                        case "Ascoli Piceno" -> "Ascoli-Piceno";
-                        case "Reggio Calabria" -> "Reggio-Calabria";
-                        case "Vibo Valentia" -> "Vibo-Valentia";
-                        case "La Spezia" -> "La-Spezia";
-                        default -> fourth;
-                    };
 
                     Municipality municipality = new Municipality(provincesService.findByName(fourth), data[2]);
 
