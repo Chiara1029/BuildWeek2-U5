@@ -41,7 +41,7 @@
 //
 //                String[] data = line.split(csvSplitBy);
 //
-//                if (!Objects.equals(data[1], "Verbania") && !Objects.equals(data[1], "Medio Campidano") && !Objects.equals(data[1], "Carbonia Iglesias") && !Objects.equals(data[1], "Ogliastra") ) {
+//                if (!Objects.equals(data[1], "Verbania") && !Objects.equals(data[1], "Medio Campidano") && !Objects.equals(data[1], "Carbonia Iglesias") && !Objects.equals(data[1], "Ogliastra")) {
 //
 //                    String provinceName = data[1];
 //

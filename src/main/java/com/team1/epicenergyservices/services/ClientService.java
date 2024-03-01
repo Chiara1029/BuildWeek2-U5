@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -58,7 +59,8 @@ public class ClientService {
         newClient.setLogo(body.logo());
         newClient.setRegisterDate(LocalDate.now());
         newClient.setLegalAddress(addressesService.save(body.legalAddress()));
-        if (body.operatingAddress() != null) newClient.setOperatingAddress(addressesService.save(body.operatingAddress()));
+        if (body.operatingAddress() != null)
+            newClient.setOperatingAddress(addressesService.save(body.operatingAddress()));
         return clientDAO.save(newClient);
     }
 
@@ -98,4 +100,30 @@ public class ClientService {
     }
 
 
+    //ordino per fatturato
+    public List<Client> getAllClientsOrderedByRevenueAsc() {
+        return clientDAO.findAllByOrderByRevenueAsc();
+    }
+
+    public List<Client> getAllClientsOrderedByRevenueDesc() {
+        return clientDAO.findAllByOrderByRevenueDesc();
+    }
+
+
+    //FILTRO
+    public List<Client> getByRevenue(double revenue) {
+        return clientDAO.findAllByRevenue(revenue);
+    }
+
+    public List<Client> getByRegisterDate(LocalDate registerDate) {
+        return clientDAO.findAllByRegisterDate(registerDate);
+    }
+
+    public List<Client> getByLastContactDate(LocalDate lastContactDate) {
+        return clientDAO.findAllByLastContactDate(lastContactDate);
+    }
+
+    public List<Client> getClientsByCompanyNameContaining(String name) {
+        return clientDAO.findAllByCompanyNameContainingIgnoreCase(name);
+    }
 }

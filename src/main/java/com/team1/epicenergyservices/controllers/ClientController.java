@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,13 +24,48 @@ public class ClientController {
     @GetMapping
     public Page<Client> getAllClients(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "10") int size,
-                                      @RequestParam(defaultValue = "clientId") String order) {
+                                      @RequestParam(defaultValue = "id") String order) {
         return clientService.findAll(page, size, order);
     }
 
-    @GetMapping("/{clientId}")
+    @GetMapping("/findById/{clientId}")
     public Client findById(@PathVariable UUID clientId) {
         return clientService.findById(clientId);
+    }
+
+
+    //ORDERS BY
+    //ordino per fatturato dec e cre
+    @GetMapping("/orderByRevenue/{order}")
+    public List<Client> getClientsOrderedByRevenue(@PathVariable String order) {
+        if (order.equals("low")) {
+            return clientService.getAllClientsOrderedByRevenueAsc();
+        } else if (order.equals("plus")) {
+            return clientService.getAllClientsOrderedByRevenueDesc();
+        } else {
+            return null;
+        }
+    }
+
+    //FILTER
+    @GetMapping("/revenue/{revenue}")
+    public List<Client> getClientsWithRevenueGreaterThan(@PathVariable double revenue) {
+        return clientService.getByRevenue(revenue);
+    }
+
+    @GetMapping("/ByRegisterDate")
+    public List<Client> getClientsByRegisterDate(@RequestParam LocalDate registerDate) {
+        return clientService.getByRegisterDate(registerDate);
+    }
+
+    @GetMapping("/nameContaining/{name}")
+    public List<Client> getClientsByCompanyNameContaining(@PathVariable String name) {
+        return clientService.getClientsByCompanyNameContaining(name);
+    }
+
+    @GetMapping("/ByLastContactDate")
+    public List<Client> getClientsByLastContactDate(@RequestParam LocalDate lastContactDate) {
+        return clientService.getByLastContactDate(lastContactDate);
     }
 
     @PostMapping
@@ -53,4 +90,6 @@ public class ClientController {
     public String uploadLogo(@RequestParam("image") MultipartFile file, @PathVariable UUID clientId) throws Exception {
         return clientService.uploadImage(file, clientId);
     }
+
+
 }
