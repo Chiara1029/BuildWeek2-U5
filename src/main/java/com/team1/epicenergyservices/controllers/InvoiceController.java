@@ -6,6 +6,7 @@ import com.team1.epicenergyservices.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class InvoiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Invoice saveInvoice(@RequestBody InvoiceDTO newInvoice) {
         return this.invoiceService.newInvoice(newInvoice);
     }
@@ -60,6 +62,7 @@ public class InvoiceController {
 
     @DeleteMapping("/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void findIdAndDelete(@PathVariable Long invoiceId) {
         this.invoiceService.findByIdThenDelete(invoiceId);
     }
