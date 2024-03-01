@@ -1,5 +1,6 @@
 package com.team1.epicenergyservices.services;
 
+import com.team1.epicenergyservices.configuration.MailgunConfig;
 import com.team1.epicenergyservices.entities.Client;
 import com.team1.epicenergyservices.entities.Invoice;
 import com.team1.epicenergyservices.exceptions.NotFoundException;
@@ -24,6 +25,9 @@ public class InvoiceService {
     @Autowired
     private ClientService clientSrv;
 
+    @Autowired
+    private MailgunConfig mailgun;
+
     public Page<Invoice> getInvoice(int pageNum, int size, String orderBy) {
         if (size > 100) size = 100;
         Pageable pageable = PageRequest.of(pageNum, size, Sort.by(orderBy));
@@ -38,7 +42,9 @@ public class InvoiceService {
                 payload.invoiceState(),
                 client
         );
-        return invoiceDAO.save(newInvoice);
+        Invoice savedInvoice = invoiceDAO.save(newInvoice);
+        mailgun.sendInvoiceEmail(client);
+        return savedInvoice;
     }
     public Invoice findById(Long invoiceId) {
         return invoiceDAO.findById(invoiceId).orElseThrow(() -> new NotFoundException("Id " + invoiceId + " has no matches."));

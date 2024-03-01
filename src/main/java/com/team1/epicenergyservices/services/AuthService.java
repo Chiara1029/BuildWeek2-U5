@@ -1,5 +1,6 @@
 package com.team1.epicenergyservices.services;
 
+import com.team1.epicenergyservices.configuration.MailgunConfig;
 import com.team1.epicenergyservices.entities.User;
 import com.team1.epicenergyservices.enums.TypeUser;
 import com.team1.epicenergyservices.exceptions.BadRequestException;
@@ -24,18 +25,20 @@ public class AuthService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder bcrypt;
+    @Autowired
+    private MailgunConfig mailgun;
 
-    public String authenticateUserAndGenerateToken(UserLoginDTO userLog){
+    public String authenticateUserAndGenerateToken(UserLoginDTO userLog) {
         User user = userSrv.findByEmail(userLog.email());
-        if(bcrypt.matches(userLog.password(), user.getPassword())){
+        if (bcrypt.matches(userLog.password(), user.getPassword())) {
             return jwtTools.createToken(user);
-        } else{
+        } else {
             throw new UnauthorizedException("Invalid credentials, try again.");
         }
     }
 
     public User save(UserDTO user) throws IOException {
-        userRepository.findByEmail(user.email()).ifPresent( us -> {
+        userRepository.findByEmail(user.email()).ifPresent(us -> {
             throw new BadRequestException("Email: " + user.email() + " already exist.");
         });
         User newUser = new User();
@@ -47,6 +50,8 @@ public class AuthService {
         newUser.setAvatar("https://ui-avatars.com/api/?name" + user.name() + user.lastName());
         newUser.setUserType(TypeUser.USER);
 
-        return userRepository.save(newUser);
+        User savedUser = userRepository.save(newUser);
+        mailgun.sendRegistrationEmail(newUser);
+        return savedUser;
     }
 }
